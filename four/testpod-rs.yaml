@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: testpod-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hpe
+  template:
+    metadata: 
+      name: hpe
+      labels:
+        app: hpe
+    spec:
+      containers:
+      - name: test
+        image: smlinux/appjs
+        ports:
+        - containerPort: 8080
