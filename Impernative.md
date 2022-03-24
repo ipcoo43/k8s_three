@@ -1,0 +1,32 @@
+명령형 커맨드 (Impernative Commands)
+- deployment 생성
+  - kubectl create deployment NAME --image=image -- [command] [args...] [options]
+  - kubectl create 명령을 사용하영 deployment 리소스를 생성 할 수 있다.
+  - deployment controller의 이름 : myapp
+  - container에 사용할 이미지는 httpd 이미지 사용
+  - kubectl create deployment myapp --image=ghcr.io/c1t1d0s7/go-myweb --replica=1
+- 리소스 확인
+  - kubectl get deploy,rs,pod
+  - 현재 myapp deployment coltroller 리소스가 배포되었다.
+  - deployment에 의해 myapp-74ff99d replicaset 리소스 생성
+  - replicaset 리소스에 의해 myapp-replicaset-26.. pod 생성
+  - 본재본 개수 1개 생성
+  - kubectl get deploy,rs,pod -o wide
+- 서비스 실행
+  - 외부에서 클러스터 내부의 컨테이너 접근할 수 있도록 서비스 오브젝트 생성
+  - kubectl expose deploy myapp --port=80 --protocol=TCP --target-port=8080 --name=myapp-svc --type=LoadBalancer
+- 서비스 확인
+  - kubectl get services myapp-svc
+- 서비스 접근
+  - Loadbalancer type의 service 접근 : ip는 loadbalancer의 exteral-ip로 접근
+    - curl 192.168.0.111
+  - NodePort type의 service 접근 : 노드 ip와 port로 접근
+    - curl 192.168.0.111:30100
+- pod 스케일링
+  - 현재 myapp deployment coltroller는 하나의 파드를 가지고 있다. 
+  - 이를 3개의 복제본으로 스케일링 할 수 있다.
+    - kubectl scale deploy myapp --replicas=3
+- 생성한 리소스 삭제
+  - kubectl get all
+  - kubectl delete deploy myapp
+  - kubectl delete pod --all
