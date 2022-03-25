@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-pod
+  labels:
+    app: simple-pod
+spec:
+  initContainers:
+  - name: init-myservice
+    image: arisu1000/simple-container-app:latest
+    command: ['sh', '-c', 'sleep 2; echo init-myservice;']
+  - name: init-mydb
+    image: arisu1000/simple-container-app:latest
+    command: ['sh', '-c', 'sleep 2; echo init-mydb']
+  containers:
+  - name: simple-pod
+    image: arisu1000/simple-container-app:latest
+    command: ['sh', '-c', 'echo simple-pod && sleep 3600;']

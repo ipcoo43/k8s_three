@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-pod
+  labels:
+    app: simple-pod
+spec:
+  containers:
+  - name: simple-pod
+    image: arisu1000/simple-container-app:latest
+    ports:
+    - containerPort: 8080
+    env:
+    - name: TESTENV01
+      value: 'testvalue01'
+    - name: HOSTNAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    - name: CPU_REQUIRED
+      valueFrom:
+        resourceFieldRef:
+          containerName: simple-pod
+          resource: requests.cpu
+    - name: CPU_LIMIT
+      valueFrom:
+        resourceFieldRef:
+          containerName: simple-pod
+          resource: limits.cpu
