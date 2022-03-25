@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nasa
+  labels:
+    app: nasa-node
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    ports:
+    - protocol: TCP
+      containerPort: 8080

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myanpp-svc-ses-aff
+spec:
+  sessionAffinity: ClientIP
+  selector:
+    app: mynapp-rs
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

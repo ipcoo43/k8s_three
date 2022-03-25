@@ -1,0 +1,14 @@
+# api server를 통해 api로 메시지를 주고 받는다.
+# kubectl api-versions
+# kubectl api-resources
+apiVersion: v1  # Object 생성하기 위한 API Version
+kind: Pod  # Object의 종류: Pod, Service, ReplicaSet
+metadata:  # Name, UID, namespace등을 포함하는 기본적인 정보
+  name: myweb-pod
+  labels:
+    app: myweb
+    type: frontend
+spec: # Object의 상태
+  containers:
+  - name: nginx-container
+    image: nginx

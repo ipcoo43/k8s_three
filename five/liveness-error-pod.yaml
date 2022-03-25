@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-error-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    ports:
+    - protocol: TCP
+      containerPort: 8081
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 8082
