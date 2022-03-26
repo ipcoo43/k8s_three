@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-pod
+  labels:
+    app: echo-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: echo-server
+  template:
+    metadata: 
+      name: echo-server
+      labels:
+        app: echo-server
+    spec:
+      containers:
+      - name: echo-server-container
+        image: k8s.gcr.io/echoserver:1.10
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: echo-server
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    nodePort: 30100

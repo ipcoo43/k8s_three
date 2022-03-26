@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver
+  labels:
+    app: echoserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: echoserver
+  template:
+    metadata: 
+      name: echoserver
+      labels:
+        app: echoserver
+    spec:
+      containers:
+      - name: echoserver
+        image: gcr.io/google_containers/echoserver:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echoserver
+spec:
+  selector:
+    app: echoserver
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echoserver
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+spec:
+  defaultBackend:
+    service:
+      name: echoserver
+      port:
+        number: 80
+  rules:
+  #- host: work1.example.com
+  -  http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: echoserver
+            port:
+              number: 80
