@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine-pod
+  labels:
+    app: alpine
+spec:
+  containers:
+  - name: alpine-container
+    image: alpine
+    command: ['sh', '-c', 'echo Hello alpine! && sleep 3600']

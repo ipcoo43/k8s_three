@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos-pod
+  labels:
+    app: centos
+spec:
+  containers:
+  - name: centos-container
+    image: centos
+    command: ['bash', '-c', 'echo Hello centos! && sleep 3600']
